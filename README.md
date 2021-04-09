@@ -49,4 +49,4 @@ and set body like this:
 }
 
 and get token infos
-(فhis item is placed inside the postman collection)
+(this item is placed inside the postman collection)
