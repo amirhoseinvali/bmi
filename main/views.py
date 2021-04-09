@@ -1,11 +1,17 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.views.decorators.csrf import csrf_exempt 
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
 from . import forms
+from .serializers import UserSerializer, BmiSerializer
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics
+from django.contrib.auth.models import User
+from rest_framework.parsers import JSONParser
+from django.http import JsonResponse
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 # Create your views here.
 
@@ -30,10 +36,9 @@ def bmi_status(bmi):
 
 
 
-
+#Views
 def index(request):
     if request.user.is_authenticated: 
-        print(request.user.get_full_name())
         context={ 
             "authenticated":True,
             "name": request.user.get_full_name(),
@@ -71,7 +76,6 @@ def bmi(request):
 
 
 
-@csrf_exempt
 def signin(request):
     if request.user.is_authenticated:
         return redirect("/")
@@ -84,7 +88,7 @@ def signin(request):
             return redirect('/')
         else:
             form = AuthenticationForm(request.POST)
-            return render(request, 'login.html', {'form': form})
+            return render(request, 'login.html', {'form': form, 'error':'نام کاربری یا کلمه عبور اشتباه است!'})
     else:
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
@@ -95,7 +99,6 @@ def signup(request):
         return redirect('/')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        print(form)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -116,22 +119,27 @@ def signout(request):
 
 
 
-# @api_view(['POST'])
-def create_user_api(request):
-    serialized = UserSerializer(data=request.DATA)
-    if serialized.is_valid():
-        User.objects.create_user(
-            serialized.init_data['email'],
-            serialized.init_data['username'],
-            serialized.init_data['password']
-        )
-        return Response(serialized.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
-def login_user_api(request):
-    return None
+#APIViews
+class UserCreate(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated, )
 
 
-def bmi_api(request):
-    return None
+class BmiApi(APIView):
+    permission_classes = (IsAuthenticated, )
+    def post(self, request):
+        data = JSONParser().parse(request)
+        serializer = BmiSerializer(data=data)
+        if serializer.is_valid():
+            bmi = bmi_calculator(serializer.data["height"], serializer.data["weight"])
+            status = bmi_status(bmi)
+            response_data = {
+                "height": serializer.data["height"],
+                "weight": serializer.data["weight"],
+                "bmi": bmi,
+                "status": status
+            }
+            return Response(response_data, status=200)
+        return Response(serializer.errors, status=400)

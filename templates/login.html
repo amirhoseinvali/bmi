@@ -82,12 +82,10 @@
                                 
                         </div>
                         <h5 class="font-18 text-center" style="font-family:WYekan;">فرم ورود به سامانه</h5>
-                        {% if form.errors %}
-                        {% for error, message in form.errors.items %}
-                            <div style="font-family:WYekan;" class="alert alert-danger" role="alert">
-                            {{message}}
-                          </div>
-                          {% endfor %}
+                        {% if error %}
+                        <div style="font-family:WYekan;" class="alert alert-danger" role="alert">
+                        {{error}}
+                        </div>
                         {% endif %}
     
                         <form class="form-horizontal m-t-30" method="POST">

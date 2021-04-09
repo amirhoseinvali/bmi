@@ -6,7 +6,6 @@ urlpatterns = [
     path('register', views.signup),
     path('logout', views.signout),
     path('bmi', views.bmi),
-    path('api/login', views.login_user_api),
-    path('api/register', views.create_user_api),
-    path('api/bmi', views.bmi_api),
+    path('api/register', views.UserCreate.as_view()),
+    path('api/bmi', views.BmiApi.as_view()),
 ]
