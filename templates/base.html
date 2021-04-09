@@ -1,0 +1,125 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+            <title>شاخص توده بدنی</title>
+            <meta content="Responsive admin theme build on top of Bootstrap 4" name="description" />
+            <meta content="Themesdesign" name="author" />
+            <link rel="shortcut icon" href="{% static 'assets/images/index.png' %}">
+    
+            <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+            <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet">
+            <link href="{% static 'assets/css/metismenu.min.css' %}" rel="stylesheet">
+            <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+            <style>
+                @font-face {
+            font-family: WYekan;
+            font-style: normal;
+            font-weight: bold;
+            src: url('{% static "assets/fonts/eot/iranyekanwebboldfanum.eot" %}');
+            src: url('{% static "assets/fonts/eot/iranyekanwebboldfanum.eot?#iefix" %}') format('embedded-opentype'),  /* IE6-8 */
+                 url('{% static "assets/fonts/woff2/iranyekanwebboldfanum.woff2" %}') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+                 url('{% static "assets/fonts/woff/iranyekanwebboldfanum.woff" %}') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+                 url('{% static "assets/fonts/ttf/iranyekanwebboldfanum.ttf" %}') format('truetype');
+        }
+        @font-face {
+            font-family: WYekan;
+            font-style: normal;
+            font-weight: 500;
+            src: url('{% static "assets/fonts/eot/iranyekanwebmediumfanum.eot" %}');
+            src: url('{% static "assets/fonts/eot/eot/iranyekanwebmediumfanum.eot?#iefix" %}') format('embedded-opentype'),  /* IE6-8 */
+                 url('{% static "assets/fonts/woff2/iranyekanwebmediumfanum.woff2" %}') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+                 url('{% static "assets/fonts/woff/iranyekanwebmediumfanum.woff" %}') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+                 url('{% static "assets/fonts/ttf/iranyekanwebmediumfanum.ttf" %}') format('truetype');
+        }
+        @font-face {
+            font-family: WYekan;
+            font-style: normal;
+            font-weight: 300;
+            src: url('{% static "assets/fonts/eot/iranyekanweblightfanum.eot" %}');
+            src: url('{% static "assets/fonts/eot/iranyekanweblightfanum.eot?#iefix" %}') format('embedded-opentype'),  /* IE6-8 */
+                 url('{% static "assets/fonts/woff2/iranyekanweblightfanumt.woff2" %}') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+                 url('{% static "assets/fonts/woff/iranyekanweblightfanum.woff" %}') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+                 url('{% static "assets/fonts/ttf/iranyekanweblightfanum.ttf" %}') format('truetype');
+        }
+        @font-face {
+            font-family: WYekan;
+            font-style: normal;
+            font-weight: 200;
+            src: url('{% static "assets/fonts/eot/iranyekanwebthinfanum.eot" %}');
+            src: url('{% static "assets/fonts/eot/iranyekanwebthinfanum.eot?#iefix" %}') format('embedded-opentype'),  /* IE6-8 */
+                 url('{% static "assets/fonts/woff2/iranyekanwebthinfanum.woff2" %}') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+                 url('{% static "assets/fonts/woff/iranyekanwebthinfanum.woff" %}') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+                 url('{% static "assets/fonts/ttf/iranyekanwebthinfanum.ttf" %}') format('truetype');
+        }
+        @font-face {
+            font-family: WYekan;
+            font-style: normal;
+            font-weight: normal;
+            src: url('{% static "assets/fonts/eot/eot/iranyekanwebregularfanum.eot" %}');
+            src: url('{% static "assets/fonts/eot/iranyekanwebregularfanum.eot?#iefix" %}') format('embedded-opentype'),
+                 url('{% static "assets/fonts/woff/iranyekanwebregularfanum.woff" %}') format('woff'),
+                 url('{% static "assets/fonts/ttf/iranyekanwebregularfanum.ttf" %}') format('truetype'),
+                 url('{% static "assets/fonts/svg/iranyekanwebregularfanum.svg#WebYekan" %}') format('svg');
+        }
+                </style>
+        </head>
+    </head>
+
+    <body>
+
+
+<!--Navbar -->
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark default-color" style="background-color: #40B1F7;font-family: WYekan;">
+    <a class="navbar-brand" href="/">BMI</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+      aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">خانه
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/bmi">محاسبه شاخص</a>
+        </li>
+
+        {% if user.id %}
+        <li class="nav-item">
+            <a class="nav-link" href="#">{{user}}</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">خروج</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/register">ثبت نام</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">ورود</a>
+          </li>
+        {% endif %}
+      </ul>
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+    
+      </ul>
+    </div>
+  </nav>
+  <!--/.Navbar -->
+
+
+          
+    {% block content %}
+
+    {% endblock content %}
+    </body>
+</html>

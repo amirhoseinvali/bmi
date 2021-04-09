@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <center>
+        <div class="row justify-content-lg-center justify-content-xs-center" style="font-family: WYekan;">
+            <div class="col-lg-6 col-xs-12">
+                <img src="{% static 'assets/images/bmi.jpg' %}" style="width: 100%;">
+                <br>
+                <a href="/bmi">
+                    <button type="button" class="btn btn-outline-primary">محاسبه شاخص توده بدنی</button>
+                </a>
+            </div>
+        </div>
+    </center>
+
+{% endblock content %}
